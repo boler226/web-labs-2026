@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Не знайдено')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container container--narrow">
+    <h1>404 · Товар не знайдено</h1>
+    <p class="muted" th:text="${message}">Error message</p>
+    <a class="btn btn--primary" th:href="@{/products}">← Повернутись до каталогу</a>
+</main>
+</body>
+</html>

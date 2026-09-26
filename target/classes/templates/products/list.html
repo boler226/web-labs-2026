@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Каталог товарів')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <div th:if="${message}" class="alert alert--success" th:text="${message}"></div>
+
+    <div class="page-header">
+        <h1>Каталог товарів</h1>
+        <a class="btn btn--primary" th:href="@{/products/new}">+ Додати товар</a>
+    </div>
+
+    <form class="search" th:action="@{/products}" method="get">
+        <input type="text" name="query" placeholder="Пошук за назвою або категорією..." th:value="${query}"/>
+        <button type="submit" class="btn">Пошук</button>
+        <a th:if="${query}" th:href="@{/products}" class="btn btn--ghost">Скинути</a>
+    </form>
+
+    <table class="table" th:if="${!products.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Категорія</th>
+            <th>Ціна</th>
+            <th>Кількість</th>
+            <th>Оновлено</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td>
+                <strong th:text="${product.name}">Name</strong>
+                <div class="muted" th:if="${product.description}" th:text="${product.description}">Description</div>
+            </td>
+            <td th:text="${product.category}">Category</td>
+            <td th:text="${#numbers.formatDecimal(product.price, 1, 2)} + ' грн'">0.00 грн</td>
+            <td th:text="${product.quantity}">0</td>
+            <td th:text="${#temporals.format(product.updatedAt, 'dd.MM.yyyy HH:mm')}">date</td>
+            <td class="actions">
+                <a class="btn btn--small" th:href="@{/products/{id}/edit(id=${product.id})}">Редагувати</a>
+                <form class="inline-form" th:action="@{/products/{id}/delete(id=${product.id})}" method="post"
+                      onsubmit="return confirm('Видалити товар &quot;' + this.dataset.name + '&quot;?');"
+                      th:data-name="${product.name}">
+                    <button type="submit" class="btn btn--danger btn--small">Видалити</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p class="empty" th:if="${products.isEmpty()}">Товарів не знайдено.</p>
+</main>
+</body>
+</html>

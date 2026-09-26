@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="head(title)">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title th:text="${title} + ' · Product Catalog'">Product Catalog</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    </th:block>
+</head>
+<body>
+    <header class="topbar" th:fragment="navbar">
+        <div class="topbar__inner">
+            <a class="brand" th:href="@{/products}">📦 Product Catalog</a>
+            <a class="brand__lab" th:href="@{/products}">Lab 1 · Simple web-application</a>
+        </div>
+    </header>
+</body>
+</html>

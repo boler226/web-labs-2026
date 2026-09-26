@@ -1,0 +1,8 @@
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\controller\HomeController.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\controller\ProductController.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\entity\Product.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\exception\GlobalExceptionHandler.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\exception\ProductNotFoundException.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\ProductCatalogApplication.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\repository\ProductRepository.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\service\ProductService.java

@@ -1,0 +1,8 @@
+com\university\productcatalog\service\ProductService.class
+com\university\productcatalog\entity\Product.class
+com\university\productcatalog\repository\ProductRepository.class
+com\university\productcatalog\ProductCatalogApplication.class
+com\university\productcatalog\exception\ProductNotFoundException.class
+com\university\productcatalog\controller\HomeController.class
+com\university\productcatalog\exception\GlobalExceptionHandler.class
+com\university\productcatalog\controller\ProductController.class
