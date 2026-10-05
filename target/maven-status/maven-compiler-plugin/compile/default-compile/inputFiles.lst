@@ -1,6 +1,11 @@
 C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\controller\HomeController.java
 C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\controller\ProductController.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\controller\ProductRestController.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\dto\ProductRequest.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\dto\ProductResponse.java
 C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\entity\Product.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\exception\ApiError.java
+C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\exception\ApiExceptionHandler.java
 C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\exception\GlobalExceptionHandler.java
 C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\exception\ProductNotFoundException.java
 C:\Users\illam\IdeaProjects\product-catalog\src\main\java\com\university\productcatalog\ProductCatalogApplication.java

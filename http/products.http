@@ -1,0 +1,49 @@
+### Отримати список усіх товарів
+GET http://localhost:8080/api/products
+
+### Пошук товарів за назвою/категорією
+GET http://localhost:8080/api/products?query=key
+
+### Отримати товар за id (підстав реальний id)
+GET http://localhost:8080/api/products/1
+
+### Створити новий товар
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Mechanical Keyboard",
+  "description": "RGB mechanical keyboard, blue switches",
+  "category": "Electronics",
+  "price": 79.99,
+  "quantity": 25
+}
+
+### Створити товар з помилкою валідації (очікуємо 400)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "category": "Electronics",
+  "price": -5,
+  "quantity": -1
+}
+
+### Оновити товар (підстав реальний id)
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+  "name": "Mechanical Keyboard Pro",
+  "description": "RGB mechanical keyboard, brown switches",
+  "category": "Electronics",
+  "price": 89.99,
+  "quantity": 15
+}
+
+### Отримати неіснуючий товар (очікуємо 404)
+GET http://localhost:8080/api/products/999999
+
+### Видалити товар (підстав реальний id)
+DELETE http://localhost:8080/api/products/1
