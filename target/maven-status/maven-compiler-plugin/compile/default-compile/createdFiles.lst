@@ -1,8 +1,13 @@
+com\university\productcatalog\exception\ApiExceptionHandler.class
+com\university\productcatalog\dto\ProductResponse.class
 com\university\productcatalog\service\ProductService.class
 com\university\productcatalog\entity\Product.class
 com\university\productcatalog\repository\ProductRepository.class
 com\university\productcatalog\ProductCatalogApplication.class
+com\university\productcatalog\dto\ProductRequest.class
 com\university\productcatalog\exception\ProductNotFoundException.class
 com\university\productcatalog\controller\HomeController.class
 com\university\productcatalog\exception\GlobalExceptionHandler.class
+com\university\productcatalog\exception\ApiError.class
+com\university\productcatalog\controller\ProductRestController.class
 com\university\productcatalog\controller\ProductController.class
