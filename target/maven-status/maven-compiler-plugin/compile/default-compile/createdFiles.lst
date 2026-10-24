@@ -4,6 +4,7 @@ com\university\productcatalog\service\ProductService.class
 com\university\productcatalog\entity\Product.class
 com\university\productcatalog\repository\ProductRepository.class
 com\university\productcatalog\ProductCatalogApplication.class
+com\university\productcatalog\config\SecurityConfig.class
 com\university\productcatalog\dto\ProductRequest.class
 com\university\productcatalog\exception\ProductNotFoundException.class
 com\university\productcatalog\controller\HomeController.class
