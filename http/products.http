@@ -1,14 +1,21 @@
-### Отримати список усіх товарів
-GET http://localhost:8080/api/products
+@baseUrl = http://localhost:8080
+# Base64 of "admin:admin123"
+@auth = Basic YWRtaW46YWRtaW4xMjM=
 
-### Пошук товарів за назвою/категорією
-GET http://localhost:8080/api/products?query=key
+### 1. Без авторизації (очікуємо 401 Unauthorized)
+GET {{baseUrl}}/api/products
 
-### Отримати товар за id (підстав реальний id)
-GET http://localhost:8080/api/products/1
+### 2. Невірний пароль (очікуємо 401 Unauthorized)
+GET {{baseUrl}}/api/products
+Authorization: Basic YWRtaW46d3Jvbmc=
 
-### Створити новий товар
-POST http://localhost:8080/api/products
+### 3. Список товарів з авторизацією (200 OK)
+GET {{baseUrl}}/api/products
+Authorization: {{auth}}
+
+### 4. Створення товару (201 Created), id зберігається для наступних запитів
+POST {{baseUrl}}/api/products
+Authorization: {{auth}}
 Content-Type: application/json
 
 {
@@ -19,8 +26,13 @@ Content-Type: application/json
   "quantity": 25
 }
 
-### Створити товар з помилкою валідації (очікуємо 400)
-POST http://localhost:8080/api/products
+> {%
+    client.global.set("productId", response.body.id);
+%}
+
+### 5. Створення з невалідними даними (очікуємо 400 Bad Request)
+POST {{baseUrl}}/api/products
+Authorization: {{auth}}
 Content-Type: application/json
 
 {
@@ -30,8 +42,13 @@ Content-Type: application/json
   "quantity": -1
 }
 
-### Оновити товар (підстав реальний id)
-PUT http://localhost:8080/api/products/1
+### 6. Отримання товару за id (200 OK)
+GET {{baseUrl}}/api/products/{{productId}}
+Authorization: {{auth}}
+
+### 7. Оновлення товару (200 OK)
+PUT {{baseUrl}}/api/products/{{productId}}
+Authorization: {{auth}}
 Content-Type: application/json
 
 {
@@ -42,8 +59,13 @@ Content-Type: application/json
   "quantity": 15
 }
 
-### Отримати неіснуючий товар (очікуємо 404)
-GET http://localhost:8080/api/products/999999
+### 8. Отримання неіснуючого товару (очікуємо 404 Not Found)
+GET {{baseUrl}}/api/products/999999
+Authorization: {{auth}}
 
-### Видалити товар (підстав реальний id)
-DELETE http://localhost:8080/api/products/1
+### 9. Видалення без авторизації (очікуємо 401 Unauthorized)
+DELETE {{baseUrl}}/api/products/{{productId}}
+
+### 10. Видалення з авторизацією (204 No Content)
+DELETE {{baseUrl}}/api/products/{{productId}}
+Authorization: {{auth}}
