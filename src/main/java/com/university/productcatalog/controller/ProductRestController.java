@@ -6,6 +6,7 @@ import com.university.productcatalog.entity.Product;
 import com.university.productcatalog.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class ProductRestController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('VIEWER', 'EDITOR', 'ADMIN')")
     public List<ProductResponse> findAll(@RequestParam(required = false) String query) {
         return productService.findAll(query).stream()
                 .map(ProductResponse::from)
@@ -37,11 +39,13 @@ public class ProductRestController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('VIEWER', 'EDITOR', 'ADMIN')")
     public ProductResponse findById(@PathVariable Long id) {
         return ProductResponse.from(productService.findById(id));
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('EDITOR', 'ADMIN')")
     public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest request,
                                                     UriComponentsBuilder uriBuilder) {
         Product created = productService.create(toEntity(request));
@@ -50,12 +54,14 @@ public class ProductRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('EDITOR', 'ADMIN')")
     public ProductResponse update(@PathVariable Long id, @Valid @RequestBody ProductRequest request) {
         Product updated = productService.update(id, toEntity(request));
         return ProductResponse.from(updated);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.delete(id);
         return ResponseEntity.noContent().build();
