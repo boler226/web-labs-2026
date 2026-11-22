@@ -1,0 +1,41 @@
+{
+  "info": {
+    "name": "Product Catalog JWT Lab",
+    "description": "Request a one-hour JWT for the existing admin account. The token endpoint uses HTTP Basic authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get JWT token",
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "admin", "type": "string" },
+            { "key": "password", "value": "admin123", "type": "string" }
+          ]
+        },
+        "url": "{{baseUrl}}/api/auth/token",
+        "description": "Copy accessToken from the response into the JWT debugger at jwt.io."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Token issued', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('accessToken', body.accessToken);",
+              "pm.test('JWT has three sections', function () { pm.expect(body.accessToken.split('.')).to.have.length(3); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ]
+}

@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:8080
+
+### Отримати JWT для admin (пароль admin123)
+POST {{baseUrl}}/api/auth/token
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+> {%
+    client.test("JWT issued", () => client.assert(response.status === 200));
+    if (response.status === 200) client.global.set("accessToken", response.body.accessToken);
+%}
