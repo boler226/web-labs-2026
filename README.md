@@ -84,3 +84,9 @@ mvn test
 ```
 
 Юніт-тести покривають сервісний шар (`ProductServiceTest`) із мок-репозиторієм.
+
+### Лабораторна: audit notes через JWT
+
+Маршрути `/api/audit-notes` приймають Bearer JWT. `EDITOR` і `ADMIN` можуть переглядати нотатки; створювати їх може лише `ADMIN`. Нотатки зберігаються в PostgreSQL, автором стає користувач із токена.
+
+Імпортуйте [`postman/audit-notes-jwt.postman_collection.json`](postman/audit-notes-jwt.postman_collection.json) у Postman. У змінних колекції вкажіть локальні паролі `viewerPassword`, `editorPassword`, `adminPassword` і виконайте колекцію в Runner. Перші три запити отримують JWT, наступні п'ять перевіряють доступ до audit notes. [П'ять скриншотів без курсора](evidence/audit-notes/README.md) збережено в проєкті.
