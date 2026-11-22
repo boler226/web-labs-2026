@@ -65,6 +65,10 @@ API `/api/products` використовує HTTP Basic і трьох навча
 Запит №6 створює товар і зберігає його `id` для запитів №7–10; №10 видаляє цей товар.
 Запускайте файл після старту PostgreSQL і Spring Boot у HTTP Client IntelliJ IDEA.
 
+### Лабораторна: доступ через анотації
+
+Правила доступу для GET, POST, PUT і DELETE тепер задано анотаціями `@PreAuthorize` на методах `ProductRestController`; `@EnableMethodSecurity` вмикає їх перевірку. Десять сценаріїв для гостя, `viewer`, `editor` і `admin` є в [`http/method-security.http`](http/method-security.http). Запустіть їх послідовно: запит №5 зберігає id товару, а №10 видаляє його. Для Moodle зробіть скриншоти анотацій у контролері та результатів HTTP Client; посилання на коміт додайте після власного коміту.
+
 ### Автоматичні тести
 
 ```bash

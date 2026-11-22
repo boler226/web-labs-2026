@@ -1,0 +1,75 @@
+@baseUrl = http://localhost:8080
+@viewer = Basic dmlld2VyOnZpZXdlcjEyMw==
+@editor = Basic ZWRpdG9yOmVkaXRvcjEyMw==
+@admin = Basic YWRtaW46YWRtaW4xMjM=
+
+### 1. Гість: GET /api/products -> 401
+GET {{baseUrl}}/api/products
+
+> {% client.test("401", () => client.assert(response.status === 401)); %}
+
+### 2. VIEWER: GET /api/products -> 200
+GET {{baseUrl}}/api/products
+Authorization: {{viewer}}
+
+> {% client.test("200", () => client.assert(response.status === 200)); %}
+
+### 3. VIEWER: POST /api/products -> 403
+POST {{baseUrl}}/api/products
+Authorization: {{viewer}}
+Content-Type: application/json
+
+{"name":"Denied product","category":"Lab","price":10,"quantity":1}
+
+> {% client.test("403", () => client.assert(response.status === 403)); %}
+
+### 4. EDITOR: GET /api/products -> 200
+GET {{baseUrl}}/api/products
+Authorization: {{editor}}
+
+> {% client.test("200", () => client.assert(response.status === 200)); %}
+
+### 5. EDITOR: POST /api/products -> 201; зберегти id
+POST {{baseUrl}}/api/products
+Authorization: {{editor}}
+Content-Type: application/json
+
+{"name":"Annotation lab product","category":"Lab","price":10,"quantity":1}
+
+> {%
+    client.test("201", () => client.assert(response.status === 201));
+    if (response.status === 201) client.global.set("methodSecurityProductId", response.body.id);
+%}
+
+### 6. VIEWER: GET /api/products/{id} -> 200
+GET {{baseUrl}}/api/products/{{methodSecurityProductId}}
+Authorization: {{viewer}}
+
+> {% client.test("200", () => client.assert(response.status === 200)); %}
+
+### 7. EDITOR: PUT /api/products/{id} -> 200
+PUT {{baseUrl}}/api/products/{{methodSecurityProductId}}
+Authorization: {{editor}}
+Content-Type: application/json
+
+{"name":"Annotation lab product updated","category":"Lab","price":12,"quantity":2}
+
+> {% client.test("200", () => client.assert(response.status === 200)); %}
+
+### 8. EDITOR: DELETE /api/products/{id} -> 403
+DELETE {{baseUrl}}/api/products/{{methodSecurityProductId}}
+Authorization: {{editor}}
+
+> {% client.test("403", () => client.assert(response.status === 403)); %}
+
+### 9. ADMIN: GET /api/products/{id} -> 200
+GET {{baseUrl}}/api/products/{{methodSecurityProductId}}
+Authorization: {{admin}}
+
+> {% client.test("200", () => client.assert(response.status === 200)); %}
+
+### 10. ADMIN: DELETE /api/products/{id} -> 204
+DELETE {{baseUrl}}/api/products/{{methodSecurityProductId}}
+Authorization: {{admin}}
+
+> {% client.test("204", () => client.assert(response.status === 204)); %}
