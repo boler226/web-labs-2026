@@ -69,6 +69,14 @@ API `/api/products` використовує HTTP Basic і трьох навча
 
 Правила доступу для GET, POST, PUT і DELETE тепер задано анотаціями `@PreAuthorize` на методах `ProductRestController`; `@EnableMethodSecurity` вмикає їх перевірку. Десять сценаріїв для гостя, `viewer`, `editor` і `admin` є в [`http/method-security.http`](http/method-security.http). Запустіть їх послідовно: запит №5 зберігає id товару, а №10 видаляє його. Для Moodle зробіть скриншоти анотацій у контролері та результатів HTTP Client; посилання на коміт додайте після власного коміту.
 
+### Лабораторна: отримання та перегляд JWT
+
+Імпортуйте [`postman/jwt-lab.postman_collection.json`](postman/jwt-lab.postman_collection.json) у Postman і виконайте **Get JWT token** після запуску застосунку. Запит `POST /api/auth/token` використовує Basic облікові дані `admin` / `admin123` і повертає `accessToken`, `tokenType` та `expiresIn`. Альтернативний запит для IntelliJ є в [`http/jwt.http`](http/jwt.http).
+
+Скопіюйте `accessToken` у [JWT Debugger](https://jwt.io/) і зробіть скриншот розібраних Header та Payload. Очікувані поля: `alg: HS256`, `sub: admin`, `roles: ["ADMIN"]`, `iss: product-catalog`, `iat`, `exp`. Для перевірки підпису введіть локальний навчальний секрет з `application.properties` у поле **Secret**. Робочий секрет задавайте змінною `JWT_SECRET` і не публікуйте його.
+
+Токен видається на 1 годину для демонстрації JWT. Маршрути товарів у цій лабораторній і далі використовують HTTP Basic.
+
 ### Автоматичні тести
 
 ```bash
