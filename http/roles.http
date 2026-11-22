@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:8080
+# Локальні навчальні облікові записи з application.properties.
+@viewer = Basic dmlld2VyOnZpZXdlcjEyMw==
+@editor = Basic ZWRpdG9yOmVkaXRvcjEyMw==
+@admin = Basic YWRtaW46YWRtaW4xMjM=
+
+### 1. Гість не може переглядати товари: 401
+GET {{baseUrl}}/api/products
+
+> {% client.test("Guest: 401", () => client.assert(response.status === 401)); %}
+
+### 2. Неправильний пароль адміністратора: 401
+GET {{baseUrl}}/api/products
+Authorization: Basic YWRtaW46d3Jvbmc=
+
+> {% client.test("Wrong password: 401", () => client.assert(response.status === 401)); %}
+
+### 3. VIEWER може переглядати товари: 200
+GET {{baseUrl}}/api/products
+Authorization: {{viewer}}
+
+> {% client.test("Viewer reads: 200", () => client.assert(response.status === 200)); %}
+
+### 4. VIEWER не може створювати товари: 403
+POST {{baseUrl}}/api/products
+Authorization: {{viewer}}
+Content-Type: application/json
+
+{
+  "name": "Forbidden keyboard",
+  "category": "Electronics",
+  "price": 79.99,
+  "quantity": 25
+}
+
+> {% client.test("Viewer cannot create: 403", () => client.assert(response.status === 403)); %}
+
+### 5. EDITOR може переглядати товари: 200
+GET {{baseUrl}}/api/products
+Authorization: {{editor}}
+
+> {% client.test("Editor reads: 200", () => client.assert(response.status === 200)); %}
+
+### 6. EDITOR створює товар; id зберігається для запитів 7–10: 201
+POST {{baseUrl}}/api/products
+Authorization: {{editor}}
+Content-Type: application/json
+
+{
+  "name": "Lab keyboard",
+  "description": "Created by the role access lab",
+  "category": "Electronics",
+  "price": 79.99,
+  "quantity": 25
+}
+
+> {%
+    client.test("Editor creates: 201", () => client.assert(response.status === 201));
+    if (response.status === 201) client.global.set("productId", response.body.id);
+%}
+
+### 7. EDITOR може оновити створений товар: 200
+PUT {{baseUrl}}/api/products/{{productId}}
+Authorization: {{editor}}
+Content-Type: application/json
+
+{
+  "name": "Lab keyboard Pro",
+  "description": "Updated by the role access lab",
+  "category": "Electronics",
+  "price": 89.99,
+  "quantity": 15
+}
+
+> {% client.test("Editor updates: 200", () => client.assert(response.status === 200)); %}
+
+### 8. EDITOR не може видалити товар: 403
+DELETE {{baseUrl}}/api/products/{{productId}}
+Authorization: {{editor}}
+
+> {% client.test("Editor cannot delete: 403", () => client.assert(response.status === 403)); %}
+
+### 9. ADMIN може переглянути товар після забороненого видалення: 200
+GET {{baseUrl}}/api/products/{{productId}}
+Authorization: {{admin}}
+
+> {% client.test("Admin reads: 200", () => client.assert(response.status === 200)); %}
+
+### 10. ADMIN може видалити товар: 204
+DELETE {{baseUrl}}/api/products/{{productId}}
+Authorization: {{admin}}
+
+> {% client.test("Admin deletes: 204", () => client.assert(response.status === 204)); %}
