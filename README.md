@@ -22,7 +22,7 @@
 docker compose up -d
 ```
 
-Це підніме PostgreSQL на `localhost:5432` з базою `product_catalog`,
+Це підніме PostgreSQL на `localhost:5433` з базою `product_catalog`,
 користувачем `postgres` і паролем `postgres`.
 
 Якщо своя інсталяція PostgreSQL — просто створіть базу вручну:
